@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- 🔥 App title -->
+    <title>Hlech</title>
+
+    <!-- 🔥 Mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#16a34a" />
+
+    <!-- 🔥 App description -->
+    <meta
+      name="description"
+      content="Hlech is a smart health and wellness app for tracking health, meals, exercise, savings, and daily wellbeing."
+    />
+
+    <!-- 🔥 PWA Manifest (THIS FIXES 'no manifest detected') -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- 🔥 Icons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+
+    <!-- 🔥 iOS PWA support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Hlech" />
+  </head>
+   
+  <body>
+    <noscript>You need to enable JavaScript to run Hlech.</noscript>
+
+    <!-- ❗ DO NOT REMOVE THIS -->
+    <div id="root"></div>
+    
+    <!-- 🔥 Service Worker -->
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js")
+        .then(reg => console.log("Service Worker registered:", reg))
+        .catch(err => console.error("SW registration failed:", err));
+    });
+  }
+</script>
+
+  </body>
+</html>
