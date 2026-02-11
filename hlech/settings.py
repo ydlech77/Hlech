@@ -6,9 +6,11 @@ Ready for React PWA + PostgreSQL + JWT authentication.
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # ================= BASE =================
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 # ================= SECURITY =================
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")  # use env var in production
@@ -37,15 +39,18 @@ INSTALLED_APPS = [
 
 # ================= MIDDLEWARE =================
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # must be first
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # 👈 ADD THIS
+    "corsheaders.middleware.CorsMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = 'hlech.urls'
 
@@ -71,11 +76,11 @@ WSGI_APPLICATION = 'hlech.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "hlech_db"),
-        "USER": os.environ.get("DB_USER", "hlech_user"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "sog"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
 

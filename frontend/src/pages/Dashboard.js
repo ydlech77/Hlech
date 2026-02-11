@@ -76,10 +76,10 @@ export default function Dashboard() {
     ["🏋️ Exercise Guide", "Exercises for you", "/exercise-guide"],
     ["🧑‍⚕️ AI Doctor", "Medical guidance", "/ai-doctor"],
     ["😂 Hchat", "Jokes, raps & fun", "/fun-chat"],
-    ["👩‍🍳 Cooking Tips", "Affordable meals", "/meal-planner"],
+    ["👩‍🍳 Cooking Tips", "Affordable meals", "/Cooking-Tips"],
     ["📑 Hlech Insurance", "Health coverage", "/hlech-insurance"],
     ["📈 Progress Tracker", "Track health goals", "/progress-tracker"],
-    ["🧠 Mental Health", "Mind & emotions care", "/mental-health"],
+    ["🧠 Discover Hlech", "Mind & emotions care", "/Discover"],
     ["🩺 Therapist", "Talk to professionals", "/therapist"],
     ["📍 Location Tracker", "Track movements", "/location-tracker"],
     ["📋 Medical Records", "Health history", "/medical-records"],
@@ -213,7 +213,7 @@ export default function Dashboard() {
           <a
             key={title}
             href={link}
-            className="p-6 bg-white rounded-xl shadow hover:shadow-lg transition"
+            className="p-7 bg-white rounded-xl shadow hover:shadow-lg transition"
           >
             <h3 className="font-bold">{title}</h3>
             <p className="text-sm text-gray-500 mt-2">{desc}</p>
