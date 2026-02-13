@@ -59,7 +59,7 @@ ROOT_URLCONF = 'hlech.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "static/frontend/build")],  # React build
+        'DIRS': [BASE_DIR / "frontend" / "build"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,6 +70,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'hlech.wsgi.application'
 
@@ -103,14 +104,14 @@ USE_TZ = True
 # ================= STATIC FILES =================
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "static/frontend/build/static"),
+    BASE_DIR / "frontend" / "build" / "static",
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # for collectstatic
+
+STATIC_ROOT = BASE_DIR / "staticfiles"  # for collectstatic
 
 # ================= MEDIA =================
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # ================= REST FRAMEWORK =================
 REST_FRAMEWORK = {

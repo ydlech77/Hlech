@@ -3,6 +3,7 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from accounts.views import EmailTokenObtainPairView
 from core import api_views as core_api
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -14,4 +15,8 @@ urlpatterns = [
     # app routes
     path("api/accounts/", include("accounts.urls")),
     path("api/dashboard/", core_api.dashboard, name="dashboard"),
+]
+
+urlpatterns += [
+    path("", TemplateView.as_view(template_name="index.html")),
 ]
