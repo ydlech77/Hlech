@@ -39,7 +39,7 @@ export default function Dashboard() {
       return;
     }
 
-    fetch("http://127.0.0.1:8000/api/dashboard/", {
+    fetch("https://hlech.onrender.com/api/dashboard/")
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {

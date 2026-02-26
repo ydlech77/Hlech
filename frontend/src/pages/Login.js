@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE = "http://127.0.0.1:8000"; // change if your backend runs elsewhere
-
+const API_BASE = "https://hlech.onrender.com";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
