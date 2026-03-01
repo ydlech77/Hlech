@@ -47,10 +47,10 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      fetch("https://hlech.onrender.com/api/accounts/signup/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
+      const res = await fetch("https://hlech.onrender.com/api/accounts/signup/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
       });
 
       const body = await safeJson(res);
