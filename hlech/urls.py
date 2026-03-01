@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework_simplejwt.views import TokenRefreshView
 from accounts.views import EmailTokenObtainPairView
 from core import api_views as core_api
@@ -17,6 +17,7 @@ urlpatterns = [
     path("api/dashboard/", core_api.dashboard, name="dashboard"),
 ]
 
+# React fallback (must be last)
 urlpatterns += [
-    path("", TemplateView.as_view(template_name="index.html")),
+    re_path(r'^.*$', TemplateView.as_view(template_name="index.html")),
 ]
