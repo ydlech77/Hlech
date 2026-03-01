@@ -143,7 +143,7 @@ export default function Login() {
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
         {!showReset ? (
           <>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Welcome back</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Welcome back to Hlech </h2>
 
             {formError && (
               <div className="mb-3 rounded-md bg-red-50 border border-red-200 text-red-700 p-3 text-sm">

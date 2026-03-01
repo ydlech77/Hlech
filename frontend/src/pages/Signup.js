@@ -47,7 +47,7 @@ export default function Signup() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/accounts/signup/", {
+      fetch("https://hlech.onrender.com/api/accounts/signup/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
@@ -94,7 +94,7 @@ export default function Signup() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-50 p-6">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Create account</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">Create Hlech account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="text-sm text-gray-600">Username</label>
