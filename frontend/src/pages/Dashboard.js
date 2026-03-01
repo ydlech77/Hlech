@@ -39,15 +39,17 @@ export default function Dashboard() {
       return;
     }
 
-    fetch("https://hlech.onrender.com/api/dashboard/")
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed");
-        return res.json();
-      })
-      .then((data) => setUser(data))
-      .catch(() => setUser({ fullName: "User" }));
+    fetch("https://hlech.onrender.com/api/dashboard/", {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((res) => {
+    if (!res.ok) throw new Error("Failed");
+    return res.json();
+  })
+  .then((data) => setUser(data))
+  .catch(() => setUser({ fullName: "User" }));
   }, [navigate]);
 
   // ================= LOGOUT =================
