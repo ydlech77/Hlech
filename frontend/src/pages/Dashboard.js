@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -184,11 +185,11 @@ export default function Dashboard() {
 
       {/* MOBILE VIEW */}
       <div className="grid grid-cols-2 sm:grid-cols-2 gap-5 md:hidden">
-        {mobileFeatures.map(([title, desc, link]) => (
-          <a key={title} href={link} className="p-6 bg-white rounded-xl shadow">
-            <h3 className="font-bold">{title}</h3>
-            <p className="text-sm text-gray-500 mt-2">{desc}</p>
-          </a>
+      {mobileFeatures.map(([title, desc, link]) => (
+      <Link key={title} to={link} className="p-6 bg-white rounded-xl shadow">
+      <h3 className="font-bold">{title}</h3>
+      <p className="text-sm text-gray-500 mt-2">{desc}</p>
+      </Link>
         ))}
 
         <button
@@ -211,17 +212,17 @@ export default function Dashboard() {
 
       {/* DESKTOP VIEW */}
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {desktopFeatures.map(([title, desc, link]) => (
-          <a
-            key={title}
-            href={link}
-            className="p-7 bg-white rounded-xl shadow hover:shadow-lg transition"
-          >
-            <h3 className="font-bold">{title}</h3>
-            <p className="text-sm text-gray-500 mt-2">{desc}</p>
-          </a>
-        ))}
-      </div>
+  {desktopFeatures.map(([title, desc, link]) => (
+    <Link
+      key={title}
+      to={link}
+      className="p-7 bg-white rounded-xl shadow hover:shadow-lg transition"
+    >
+      <h3 className="font-bold">{title}</h3>
+      <p className="text-sm text-gray-500 mt-2">{desc}</p>
+    </Link>
+  ))}
+</div>
     </div>
   );
 }
