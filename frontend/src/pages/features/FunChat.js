@@ -16,53 +16,41 @@ const lechJokes = [
   "Show me a clean Yoruba girl and I’ll show you a virgin from Akwa Ibom 😭😂",
   "I made many mistakes last year but thank God I know buy that Balenciaga sweater wey Yoruba boys dey wear like uniform 😭🤣",
 
-  // NEW JOKES
   "I told my phone battery we are in this together… now it’s at 2% and I’m scared 😭😂",
   "If sleep was a subject, I would have first class 😎🤣",
   "Teacher said ‘use your brain’… I said ‘which one?’ 😭😂",
   "My village people finally found me… but network is too bad 😭🤣",
   "I opened my fridge 5 times… nothing changed but I still believe 😭😂",
+
+  // NEW JOKES
+  "My internet went down, so I had to speak to my family… they seem like strangers 😭😂",
+  "I don’t need anger management, I need people to stop annoying me 😎🤣",
+  "They told me ‘do what you love’, now I’m broke but happy 😭😂",
+  "If laziness was an Olympic sport, I’d probably send someone else to compete 😎🤣",
+  "I put my phone on airplane mode, but it’s not flying… someone lied to me 😭😂",
 ];
 
 /* 🧠 LECH GAMES */
 const lechGames = [
-  {
-    question: "I speak without a mouth and hear without ears. What am I?",
-    answer: "echo",
-  },
-  {
-    question: "What number comes next: 2, 4, 8, 16, ?",
-    answer: "32",
-  },
-  {
-    question: "If 5 + 3 × 2 = ?",
-    answer: "11",
-  },
-  {
-    question: "What has keys but can’t open a door?",
-    answer: "keyboard",
-  },
+  { question: "I speak without a mouth and hear without ears. What am I?", answer: "echo" },
+  { question: "What number comes next: 2, 4, 8, 16, ?", answer: "32" },
+  { question: "If 5 + 3 × 2 = ?", answer: "11" },
+  { question: "What has keys but can’t open a door?", answer: "keyboard" },
+
+  { question: "What has a head, a tail, but no body?", answer: "coin" },
+  { question: "Which month has 28 days?", answer: "all" },
+  { question: "What goes up but never comes down?", answer: "age" },
+  { question: "If you have 3 apples and take away 2, how many do you have?", answer: "2" },
 
   // NEW GAMES
-  {
-    question: "What has a head, a tail, but no body?",
-    answer: "coin",
-  },
-  {
-    question: "Which month has 28 days?",
-    answer: "all",
-  },
-  {
-    question: "What goes up but never comes down?",
-    answer: "age",
-  },
-  {
-    question: "If you have 3 apples and take away 2, how many do you have?",
-    answer: "2",
-  },
+  { question: "What can travel around the world while staying in a corner?", answer: "stamp" },
+  { question: "I’m tall when I’m young and short when I’m old. What am I?", answer: "candle" },
+  { question: "What gets wetter the more it dries?", answer: "towel" },
+  { question: "I’m always running but never get tired. What am I?", answer: "water" },
+  { question: "What begins with T, ends with T, and has T in it?", answer: "teapot" },
 ];
 
-/* 😈 FUNNY INSULTS (FAIL MODE) */
+/* 😈 FUNNY INSULTS */
 const insults = [
   "😭😂 This one pass you… go drink cold water.",
   "Omooo this brain don off since morning 😭",
@@ -72,35 +60,40 @@ const insults = [
 ];
 
 export default function FunChat() {
-  const [mode, setMode] = useState(null); // joke | game
+  const [mode, setMode] = useState(null);
   const [content, setContent] = useState("");
   const [game, setGame] = useState(null);
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
-  const [voiceOn, setVoiceOn] = useState(true); // 🔊 NEW
+  const [voiceOn, setVoiceOn] = useState(true);
 
+  // 🎤 Speak function with funny voice
   function speak(text) {
-    if (!voiceOn) return; // 🔇 mute
+    if (!voiceOn) return;
+
     if ("speechSynthesis" in window) {
       window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(
-        new SpeechSynthesisUtterance(text)
-      );
+
+      setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(text);
+        // Random funny pitch and rate
+        utterance.pitch = Math.random() * 1.5 + 0.5; // 0.5 to 2
+        utterance.rate = Math.random() * 0.7 + 0.8; // 0.8 to 1.5
+        window.speechSynthesis.speak(utterance);
+      }, 100);
     }
   }
 
   /* 😂 JOKE MODE */
   function tellLechJoke() {
-    const joke =
-      lechJokes[Math.floor(Math.random() * lechJokes.length)];
+    const joke = lechJokes[Math.floor(Math.random() * lechJokes.length)];
     setContent(joke);
     speak(joke);
   }
 
   /* 🧠 GAME MODE */
   function startGame() {
-    const g =
-      lechGames[Math.floor(Math.random() * lechGames.length)];
+    const g = lechGames[Math.floor(Math.random() * lechGames.length)];
     setGame(g);
     setAnswer("");
     setContent("");
@@ -115,8 +108,7 @@ export default function FunChat() {
       setContent("Correct! 🔥 Brain still dey work 😎");
       speak("Correct! Well done!");
     } else {
-      const insult =
-        insults[Math.floor(Math.random() * insults.length)];
+      const insult = insults[Math.floor(Math.random() * insults.length)];
       setContent(`Wrong! ${insult}`);
       speak(insult);
     }
@@ -132,7 +124,12 @@ export default function FunChat() {
 
       {/* 🔊 VOICE TOGGLE */}
       <button
-        onClick={() => setVoiceOn(!voiceOn)}
+        onClick={() => {
+          if (voiceOn && "speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+          }
+          setVoiceOn(!voiceOn);
+        }}
         className="mb-3 px-3 py-1 bg-gray-200 rounded"
       >
         {voiceOn ? "🔊 Voice On" : "🔇 Voice Off"}
@@ -187,9 +184,7 @@ export default function FunChat() {
 
           {game && (
             <div className="mt-4 bg-gray-100 p-4 rounded">
-              <p className="font-semibold mb-2">
-                {game.question}
-              </p>
+              <p className="font-semibold mb-2">{game.question}</p>
 
               <input
                 value={answer}
