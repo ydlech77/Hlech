@@ -1,5 +1,5 @@
 // src/pages/features/FunChat.js
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 /* 😂 LECH JOKES */
 const lechJokes = [
@@ -15,7 +15,6 @@ const lechJokes = [
   "My sister stop calling somebody’s son broke. If your papa get money you no go dey disturb person pikin 😭🤣",
   "Show me a clean Yoruba girl and I’ll show you a virgin from Akwa Ibom 😭😂",
   "I made many mistakes last year but thank God I know buy that Balenciaga sweater wey Yoruba boys dey wear like uniform 😭🤣",
-
   "I told my phone battery we are in this together… now it’s at 2% and I’m scared 😭😂",
   "If sleep was a subject, I would have first class 😎🤣",
   "Teacher said ‘use your brain’… I said ‘which one?’ 😭😂",
@@ -23,11 +22,11 @@ const lechJokes = [
   "I opened my fridge 5 times… nothing changed but I still believe 😭😂",
 
   // NEW JOKES
-  "My internet went down, so I had to speak to my family… they seem like strangers 😭😂",
-  "I don’t need anger management, I need people to stop annoying me 😎🤣",
-  "They told me ‘do what you love’, now I’m broke but happy 😭😂",
-  "If laziness was an Olympic sport, I’d probably send someone else to compete 😎🤣",
-  "I put my phone on airplane mode, but it’s not flying… someone lied to me 😭😂",
+  "Why did the tomato turn red? Because it saw the salad dressing 😭🤣",
+  "I asked my dog what’s 2 + 2… he gave me a blank stare 😭😂",
+  "I tried to catch fog yesterday. Mist! 😎🤣",
+  "I told my wallet a joke… now it’s empty from laughing 😭😂",
+  "If Mondays had a face, I would punch it 😭🤣",
 ];
 
 /* 🧠 LECH GAMES */
@@ -36,18 +35,16 @@ const lechGames = [
   { question: "What number comes next: 2, 4, 8, 16, ?", answer: "32" },
   { question: "If 5 + 3 × 2 = ?", answer: "11" },
   { question: "What has keys but can’t open a door?", answer: "keyboard" },
-
   { question: "What has a head, a tail, but no body?", answer: "coin" },
   { question: "Which month has 28 days?", answer: "all" },
   { question: "What goes up but never comes down?", answer: "age" },
   { question: "If you have 3 apples and take away 2, how many do you have?", answer: "2" },
 
   // NEW GAMES
-  { question: "What can travel around the world while staying in a corner?", answer: "stamp" },
-  { question: "I’m tall when I’m young and short when I’m old. What am I?", answer: "candle" },
-  { question: "What gets wetter the more it dries?", answer: "towel" },
-  { question: "I’m always running but never get tired. What am I?", answer: "water" },
-  { question: "What begins with T, ends with T, and has T in it?", answer: "teapot" },
+  { question: "I am tall when I am young, and short when I am old. What am I?", answer: "candle" },
+  { question: "The more you take, the more you leave behind. What am I?", answer: "footsteps" },
+  { question: "What has hands but can’t clap?", answer: "clock" },
+  { question: "I’m full of holes but I can hold water. What am I?", answer: "sponge" },
 ];
 
 /* 😈 FUNNY INSULTS */
@@ -67,20 +64,39 @@ export default function FunChat() {
   const [score, setScore] = useState(0);
   const [voiceOn, setVoiceOn] = useState(true);
 
-  // 🎤 Speak function with funny voice
+  const utteranceRef = useRef(null);
+  const lastTextRef = useRef(""); // to replay last joke/question
+
   function speak(text) {
+    lastTextRef.current = text;
+
     if (!voiceOn) return;
 
     if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
+      window.speechSynthesis.cancel(); // stop any current speech
 
-      setTimeout(() => {
-        const utterance = new SpeechSynthesisUtterance(text);
-        // Random funny pitch and rate
-        utterance.pitch = Math.random() * 1.5 + 0.5; // 0.5 to 2
-        utterance.rate = Math.random() * 0.7 + 0.8; // 0.8 to 1.5
-        window.speechSynthesis.speak(utterance);
-      }, 100);
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      utteranceRef.current = utterance;
+
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  function toggleVoice() {
+    if ("speechSynthesis" in window) {
+      if (voiceOn) {
+        // Mute
+        window.speechSynthesis.cancel();
+        setVoiceOn(false);
+      } else {
+        // Unmute and replay last text
+        setVoiceOn(true);
+        if (lastTextRef.current) {
+          speak(lastTextRef.current);
+        }
+      }
     }
   }
 
@@ -124,12 +140,7 @@ export default function FunChat() {
 
       {/* 🔊 VOICE TOGGLE */}
       <button
-        onClick={() => {
-          if (voiceOn && "speechSynthesis" in window) {
-            window.speechSynthesis.cancel();
-          }
-          setVoiceOn(!voiceOn);
-        }}
+        onClick={toggleVoice}
         className="mb-3 px-3 py-1 bg-gray-200 rounded"
       >
         {voiceOn ? "🔊 Voice On" : "🔇 Voice Off"}
