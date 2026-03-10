@@ -15,6 +15,13 @@ const lechJokes = [
   "My sister stop calling somebody’s son broke. If your papa get money you no go dey disturb person pikin 😭🤣",
   "Show me a clean Yoruba girl and I’ll show you a virgin from Akwa Ibom 😭😂",
   "I made many mistakes last year but thank God I know buy that Balenciaga sweater wey Yoruba boys dey wear like uniform 😭🤣",
+
+  // NEW JOKES
+  "I told my phone battery we are in this together… now it’s at 2% and I’m scared 😭😂",
+  "If sleep was a subject, I would have first class 😎🤣",
+  "Teacher said ‘use your brain’… I said ‘which one?’ 😭😂",
+  "My village people finally found me… but network is too bad 😭🤣",
+  "I opened my fridge 5 times… nothing changed but I still believe 😭😂",
 ];
 
 /* 🧠 LECH GAMES */
@@ -35,6 +42,24 @@ const lechGames = [
     question: "What has keys but can’t open a door?",
     answer: "keyboard",
   },
+
+  // NEW GAMES
+  {
+    question: "What has a head, a tail, but no body?",
+    answer: "coin",
+  },
+  {
+    question: "Which month has 28 days?",
+    answer: "all",
+  },
+  {
+    question: "What goes up but never comes down?",
+    answer: "age",
+  },
+  {
+    question: "If you have 3 apples and take away 2, how many do you have?",
+    answer: "2",
+  },
 ];
 
 /* 😈 FUNNY INSULTS (FAIL MODE) */
@@ -52,9 +77,12 @@ export default function FunChat() {
   const [game, setGame] = useState(null);
   const [answer, setAnswer] = useState("");
   const [score, setScore] = useState(0);
+  const [voiceOn, setVoiceOn] = useState(true); // 🔊 NEW
 
   function speak(text) {
+    if (!voiceOn) return; // 🔇 mute
     if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
       window.speechSynthesis.speak(
         new SpeechSynthesisUtterance(text)
       );
@@ -101,6 +129,14 @@ export default function FunChat() {
       <h2 className="text-xl font-bold mb-2">
         Hchat — Lech Fun Zone 😎
       </h2>
+
+      {/* 🔊 VOICE TOGGLE */}
+      <button
+        onClick={() => setVoiceOn(!voiceOn)}
+        className="mb-3 px-3 py-1 bg-gray-200 rounded"
+      >
+        {voiceOn ? "🔊 Voice On" : "🔇 Voice Off"}
+      </button>
 
       {!mode && (
         <div className="grid gap-3">
