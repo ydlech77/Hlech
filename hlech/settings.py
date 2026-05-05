@@ -40,9 +40,9 @@ INSTALLED_APPS = [
 
 # ================= MIDDLEWARE =================
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",  # 👈 ADD THIS
-    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -124,12 +124,12 @@ REST_FRAMEWORK = {
 }
 
 # ================= CORS =================
-CORS_ALLOW_ALL_ORIGINS = True  # for dev only
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
+CORS_ALLOW_ALL_ORIGINS = False
 
+CORS_ALLOWED_ORIGINS = [
+    "https://hlech-1.onrender.com",
+    "http://localhost:3000",
+]
 # ================= EMAIL (DEV ONLY) =================
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
