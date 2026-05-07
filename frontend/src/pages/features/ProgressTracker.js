@@ -68,7 +68,7 @@ export default function ProgressTracker() {
       ) {
         triggerAlarm();
       }
-    }, 60000); // check every minute
+    }, 1000); // check every minute
 
     return () => clearInterval(interval);
   }, [goal, triggerAlarm]);
